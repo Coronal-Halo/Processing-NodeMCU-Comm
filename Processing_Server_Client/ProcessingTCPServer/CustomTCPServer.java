@@ -7,6 +7,8 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/* A simple TCP server that listens to one port, reads input message from client and sends back response*/
+
 class CustomTCPServer implements Runnable{
   Socket socket = null;
   ObjectOutputStream oos = null;
@@ -14,8 +16,8 @@ class CustomTCPServer implements Runnable{
   String host = "192.168.43.195";
   int port_server = 80;
   
-  String input = null;			                          //Input message from client
-  boolean shutdown = false;    	                      //Flag to indicate is the server should keep running
+  String input = null;			                        //Input message from client
+  boolean shutdown = false;    	                      	//Flag to indicate is the server should keep running
   public ServerSocket server;	                        //public ServerSocket object
 
   public void run() {

@@ -8,12 +8,8 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.net.InetSocketAddress;
 
-/**
- * A simple Swing-based client for the capitalization server.
- * It has a main frame window with a text field for entering
- * strings and a textarea to see the results of capitalizing
- * them.
- */
+/* A simple TCP client that sends data to server and reads response from server */
+
 public class CustomTCPClient {
     Socket socket = null;
     ObjectOutputStream oos = null;

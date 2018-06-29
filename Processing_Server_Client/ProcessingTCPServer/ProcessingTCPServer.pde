@@ -3,7 +3,7 @@
  * Date: June 28th, 2018
  * This is a multi-threaded GUI and server program
  * Note: server code imported from the CustomTCPServerThread class,
- * which is inside the file "CustomTCPServerThread.java" under the 
+ * which is inside the file "CustomTCPServer.java" under the 
  * same folder as this file
  */
 import java.io.BufferedReader;
