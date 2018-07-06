@@ -39,6 +39,7 @@ int port_server = 80;
 CustomTCPClient client;
 
 String msgToSend = "";
+String resp = "";
 
 void setup() {
   // Set up buttons, positions and colors
@@ -59,6 +60,7 @@ void setup() {
 
 void draw() {
   update(mouseX, mouseY);
+  background(baseColor);
   
   if (clientRectOver) {
     fill(rectHighlight);
@@ -71,13 +73,13 @@ void draw() {
   textSize(14); 
   fill(color(255));
   text("Send Msg", clientRectX + rectLength/5, clientRectY + rectWidth/3, width, 100);
-  text("Response from Server: ", textRespX, textRespY, width, 100); 
+  text("Response from Server: " + resp, textRespX, textRespY, width, 100); 
   text("Message to Send: " + msgToSend, textMsgToSendX, textMsgToSendY, width, 100);
 }
 
 void mousePressed() {
   // If clicks the circle, enter client mode
-  if (clientRectOver) { //<>//
+  if (clientRectOver) {
     currentColor = rectColor;
     client = new CustomTCPClient();
     
@@ -85,11 +87,11 @@ void mousePressed() {
       client.InitSocket(host, port_client);
       client.sendData(msgToSend);
       // read resposne from server. I am not sure if there needs to be some delay but this works fine for me
-      String resp = client.readResponse();
+      resp = client.readResponse();
       if(resp != null){
         System.out.println(resp);
-        fill(color(20));
-        text("Response from Server:" + resp, 100, 50, width, 100); 
+        fill(color(255));
+        text("Response from Server:" + resp, textRespX, textRespY, width, 100); 
       }
       // Close IOstreams and socket after done using them
       client.closeIOStream();

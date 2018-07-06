@@ -28,7 +28,7 @@ void loop()
 
             Serial.print(in);  
             // send back the response. In this case, response is the input from client         
-            client.print(inChar);
+            client.print(in);
         }
     }
 

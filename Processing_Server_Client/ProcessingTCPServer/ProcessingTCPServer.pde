@@ -37,8 +37,6 @@ String response = null;                    // response sent from the server
 
 // Network, server and thread related variables
 Socket socket = null;
-ObjectOutputStream oos = null;
-ObjectInputStream ois = null;
 int port_server = 80;                      // Port listened by the server
 
 Thread serverThread = null;                // Server thread
@@ -57,7 +55,6 @@ void setup() {
   startServerRectY = 3*height/5-rectWidth/2;
   stopServerRectX = width/2-rectLength/2;
   stopServerRectY = 3*height/4-rectWidth/2;
-  ellipseMode(CENTER);
   
   textRespX = width/2-rectLength;
   textRespY = height/2-rectWidth;
@@ -66,6 +63,7 @@ void setup() {
 }
 
 void draw() {
+  background(baseColor);
   update(mouseX, mouseY);
   
   if (startServerRectOver) {
@@ -88,7 +86,7 @@ void draw() {
   fill(color(255));
   text("Start Server", startServerRectX + rectLength/5, startServerRectY + rectWidth/3, width, 100);
   text("Stop Server", stopServerRectX + rectLength/5, stopServerRectY + rectWidth/3, width, 100);
-  text("Message from Client "+input, textRespX, textRespY, width, 100); 
+  text("Message from Client: "+input, textRespX, textRespY, width, 100); 
   text("Response Sent: "+response, textMsgToSendX, textMsgToSendY, width, 100);
   
   // serverStart turns to TRUE after user clicks "Start Server" button
@@ -103,9 +101,11 @@ void draw() {
     }
   }
   
-  /*if(TCPServer == null){
-    System.out.print("TCPServer is null!"); 
-  }*/
+  // Get the input and response in order to display on the screen
+  if(TCPServer != null){
+    input = TCPServer.getClientInput();
+    response = TCPServer.getServerResponse();
+  }
   
   // serverStart turns to FALSE after user clicks "Stop Server" button
   if(!serverStart){
@@ -124,7 +124,7 @@ void draw() {
     }
     serverRunning = false;
   }
-}
+} 
 
 void mousePressed() {
   // If clicks the circle, enter server mode

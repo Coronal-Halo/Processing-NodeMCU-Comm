@@ -1,3 +1,10 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -12,8 +19,8 @@ import java.net.InetSocketAddress;
 
 public class CustomTCPClient {
     Socket socket = null;
-    ObjectOutputStream oos = null;
-    ObjectInputStream ois = null;
+    OutputStreamWriter osw = null;
+    InputStreamReader isr = null;
     
     public void InitSocket(String serverAddr, int port) throws UnknownHostException, IOException, ClassNotFoundException, InterruptedException {
     	//establish socket connection to server; creating the socket with a timeout.
@@ -23,22 +30,25 @@ public class CustomTCPClient {
     }
     
     public void sendData(String data) throws IOException {
-		System.out.println("Sending data to the server...");
-    	oos = new ObjectOutputStream(socket.getOutputStream());
-    	oos.writeObject(data);
+		System.out.println("Sending data to the server..."); //<>//
+    	osw = new OutputStreamWriter(socket.getOutputStream());
+      BufferedWriter bw = new BufferedWriter(osw);
+    	bw.write(data + "\n");
+      bw.flush();
     	System.out.println("Data sent");
     }
     
     public String readResponse() throws IOException, ClassNotFoundException {
-    	ois = new ObjectInputStream(socket.getInputStream());
+    	isr = new InputStreamReader(socket.getInputStream()); //<>//
+      BufferedReader br = new BufferedReader(isr);
     	//while(ois.available() == 0); // This does not work well
-    	String response = (String) ois.readObject();
+    	String response = (String) br.readLine();
     	return response;
     }
     
     public void closeIOStream() throws IOException {
-    	ois.close();
-		oos.close();
+    	isr.close();
+		  osw.close();
     }
 
     public void closeSocket() throws IOException {
@@ -49,7 +59,7 @@ public class CustomTCPClient {
 	public static void main(String[] args) throws Exception {
 		// get the localhost IP address, if server is running on some other IP, you need to use that
 		String host = "192.168.43.195";
-	    int port = 8080;
+	  int port = 8080;
 	    
 		CustomTCPClient client = new CustomTCPClient();
 		client.InitSocket(host, port);
@@ -57,7 +67,7 @@ public class CustomTCPClient {
 		
 		// read resposne from server. I am not sure if there needs to be some delay but this works fine for me
 		String resp = client.readResponse();
-		System.out.println(resp);
+		System.out.println( resp);
 		
 		// Close IOstreams and socket after done using them
 		client.closeIOStream();

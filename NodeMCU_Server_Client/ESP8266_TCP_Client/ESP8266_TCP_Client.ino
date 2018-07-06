@@ -58,25 +58,27 @@ void loop() {
 
   // We now create a URI for the request
 
-  // This will send the request to the server
-  client.print(String("Hello"));
-  /*unsigned long timeout = millis();
+  // The following will send the request to the server
+  /* IMPORTANT: ALWAYS USE client.println() before using client.available()!!!
+   * REASON: UNKNOWN. It probably has something to do with the I/O buffer on server/clieint side
+   */
+  Serial.println("Sending message to server ('Hello' in thes case)");
+  client.println(String("Hello"));
+  unsigned long timeout = millis();
   while (client.available() == 0) {
     if (millis() - timeout > 10000) {
       Serial.println(">>> Client Timeout !");
       client.stop();
       return;
     }
-  }*/
+  }
 
   // Read all the lines of the reply from server and print them to Serial
-  //while (client.available()) {
-    char line = client.read();
-    delay(10);
-    Serial.print(line);
-  //}
+  String line = client.readStringUntil('\n');
+  delay(10);
+  Serial.print("Response from server is: ");
+  Serial.println(line);
 
-  Serial.println();
   Serial.println("closing connection");
 }
 
