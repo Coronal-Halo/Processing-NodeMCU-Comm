@@ -16,7 +16,6 @@ class CustomTCPServer implements Runnable{
   Socket socket = null;
   ObjectOutputStream oos = null;
   ObjectInputStream ois = null;
-  String host = "192.168.43.195";
   int port_server = 80;
   
   String inputStreamData;                             //the Data in the inputStream; seperately declared from input since this variable is used to monitor the state of br.readline()
