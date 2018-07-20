@@ -9,7 +9,7 @@
 const char* ssid     = "hyx0822";
 const char* password = "hyx109876";
 
-const char* host = "192.168.43.137";
+const char* host = "192.168.191.1";
 
 void setup() {
   Serial.begin(115200);
@@ -38,19 +38,16 @@ void setup() {
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
 }
-
-int value = 0;
-
+ 
 void loop() {
-  delay(5000);
-  ++value;
+  delay(3000);
 
   Serial.print("connecting to ");
   Serial.println(host);
 
   // Use WiFiClient class to create TCP connections
   WiFiClient client;
-  const int httpPort = 80;
+  const int httpPort = 82;
   if (!client.connect(host, httpPort)) {
     Serial.println("connection failed");
     return;
@@ -73,7 +70,7 @@ void loop() {
     }
   }
 
-  // Read all the lines of the reply from server and print them to Serial
+  // Read all the. lines of the reply from server and print them to Serial
   String line = client.readStringUntil('\n');
   delay(10);
   Serial.print("Response from server is: ");
